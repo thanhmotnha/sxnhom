@@ -29,9 +29,9 @@ T('Gửi đơn: sai khoá bị chặn, đúng khoá lưu được; CORS chỉ ch
   ma = j.ma;
   const d = JSON.parse(fs.readFileSync(path.join(tm, 'don', ma + '.json'), 'utf8'));
   eq(d.bo[0].svg, '', 'svg có script bị bỏ');
-  r = await goi('/api/don', { method: 'POST', headers: { 'X-Khoa': 'khoa-thu-123' }, body: JSON.stringify({ bo: [{ ky_hieu: 'X', boc_tach: { nhom: [] } }] }) });
+  r = await goi('/api/don', { method: 'POST', headers: { 'X-Khoa': 'khoa-thu-123', 'Content-Type': 'application/json' }, body: JSON.stringify({ bo: [{ ky_hieu: 'X', boc_tach: { nhom: [] } }] }) });
   eq(r.status, 400); ok(/chưa có số bóc tách/.test((await r.json()).loi));
-  r = await goi('/api/don', { method: 'POST', headers: { 'X-Khoa': 'khoa-thu-123' }, body: '{hỏng' });
+  r = await goi('/api/don', { method: 'POST', headers: { 'X-Khoa': 'khoa-thu-123', 'Content-Type': 'application/json' }, body: '{hỏng' });
   eq(r.status, 400);
 });
 
@@ -39,7 +39,7 @@ T('Máy cắt: danh sách đơn mới, tải Excel/CSV, đánh dấu đã lấy'
   let j = await (await goi('/api/don?moi=1', { headers: { 'X-Khoa': 'khoa-thu-123' } })).json();
   eq(j.don.map((d) => d.ma), [ma]); ok(/^C\d{6}-001-HD-282254$/.test(j.don[0].tep), j.don[0].tep);
   eq((await goi('/tai/' + ma + '.xlsx')).status, 401);
-  const r = await goi('/tai/' + ma + '.xlsx?k=xem-456');
+  const r = await goi('/tai/' + ma + '.xlsx?k=khoa-thu-123');
   eq(r.status, 200); ok(/attachment; filename=".*\.xlsx"/.test(r.headers.get('content-disposition')));
   const f = path.join(tm, 'a.xlsx'); fs.writeFileSync(f, Buffer.from(await r.arrayBuffer()));
   eq(cp.execFileSync('python3', ['-c', "import openpyxl,sys;ws=openpyxl.load_workbook(sys.argv[1])['Cat nhom'];print(ws.max_row,ws['E2'].value)", f]).toString().trim(), '5 1500');
@@ -56,9 +56,10 @@ T('Trang máy cắt + bản vẽ', async () => {
   eq((await goi('/may?k=sai')).status, 401);
   const h = await (await goi('/may?k=xem-456&loc=het')).text();
   ok(h.includes(ma) && h.includes('HĐ 282254') && h.includes('Cắt xong'));
+  ok(!(await (await goi('/may?k=xem-456')).text()).includes('<form'), 'khoá chỉ xem: không có nút Cắt xong');
   const bv = await goi('/ban-ve/' + ma + '?k=xem-456');
   ok(/BẢN VẼ SẢN XUẤT/.test(await bv.text()) && /default-src 'none'/.test(bv.headers.get('content-security-policy')));
-  const r = await goi('/doi/' + ma + '/dang-cat?k=xem-456', { method: 'POST' });
+  const r = await goi('/doi/' + ma + '/xong?k=khoa-thu-123', { method: 'POST' });
   eq(r.status, 303);
   eq((await goi('/../../etc/passwd')).status, 404);
   may_chu.close(); fs.rmSync(tm, { recursive: true, force: true });

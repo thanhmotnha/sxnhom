@@ -152,6 +152,8 @@
 
   // ------------------------------------------------------------------ bản vẽ sản xuất (HTML in A4)
   /** bo = [{ky_hieu, so_luong, vi_tri, ghi_chu, mo_ta, he_nhom, kinh, rong, cao, anh (dataURL), boc_tach}] */
+  /** Hình SVG → ảnh (data URI): trình duyệt vẽ như một tấm ảnh, mã lạ trong SVG không bao giờ chạy */
+  M.anhSvg = function (svg) { svg = String(svg || ''); return /^<svg[\s>]/.test(svg) ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.indexOf('xmlns=') < 0 ? svg.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"') : svg) : ''; };
   M.htmlBanVe = function (bo, tt) {
     tt = tt || {};
     const e = (s) => String(s === undefined || s === null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -163,7 +165,7 @@
       const pk = bt.pk.map((p) => '<tr><td>' + e(p.ma) + '</td><td>' + e(p.ten) + '</td><td class="c">' + so(p.sl) + '</td></tr>').join('');
       return '<section class="trang"><div class="dau"><div><b>' + e(tt.cong_ty || 'MỘT NHÀ DESIGN & BUILD') + '</b> — BẢN VẼ SẢN XUẤT</div><div>Đơn: <b>' + e(tt.don || '') + '</b>' + (tt.cong_trinh ? ' · ' + e(tt.cong_trinh) : '') + ' · Trang ' + (i + 1) + '/' + bo.length + '</div></div>' +
         '<div class="tt"><div class="ky">' + e(b.ky_hieu || '') + '</div><div><b>' + e(b.mo_ta || '') + '</b><br>Hệ nhôm: ' + e(b.he_nhom || '') + (b.kinh ? ' · Kính: ' + e(b.kinh) : '') + '<br>Kích thước phủ bì: <b>' + so(b.rong) + ' × ' + so(b.cao) + ' mm</b> · Số bộ: <b>' + (b.so_luong || 1) + '</b>' + (b.vi_tri ? ' · Vị trí: ' + e(b.vi_tri) : '') + (b.ghi_chu ? '<br>Ghi chú: ' + e(b.ghi_chu) : '') + '</div></div>' +
-        '<div class="hinh">' + (b.anh ? '<img src="' + b.anh + '">' : (b.svg || '<i>(chưa có hình)</i>')) + '</div>' +
+        '<div class="hinh">' + (/^data:image\/(png|jpeg);base64,[A-Za-z0-9+/=]+$/.test(String(b.anh || '')) ? '<img src="' + b.anh + '">' : M.anhSvg(b.svg) ? '<img src="' + e(M.anhSvg(b.svg)) + '">' : '<i>(chưa có hình)</i>') + '</div>' +
         '<h3>Thanh nhôm (cho ' + (b.so_luong || 1) + ' bộ)</h3><table><thead><tr><th>#</th><th>Mã</th><th>Tên thanh</th><th>Loại</th><th>Dài cắt (mm)</th><th>SL</th><th>Góc cắt</th><th>Vị trí</th></tr></thead><tbody>' + nhom + '</tbody></table>' +
         '<div class="hai"><div><h3>Kính</h3><table><thead><tr><th>Tên</th><th>Loại</th><th>Rộng × Cao</th><th>SL</th><th>Vị trí</th></tr></thead><tbody>' + kinh + '</tbody></table></div>' +
         '<div><h3>Phụ kiện / vật tư</h3><table><thead><tr><th>Mã</th><th>Tên</th><th>SL</th></tr></thead><tbody>' + pk + '</tbody></table></div></div>' +

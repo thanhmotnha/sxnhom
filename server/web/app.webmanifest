@@ -1,0 +1,9 @@
+{
+  "name": "Xưởng nhôm · Một Nhà",
+  "short_name": "Xưởng nhôm",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3f5f8",
+  "theme_color": "#17365d",
+  "icons": [{ "src": "/web/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

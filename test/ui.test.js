@@ -451,13 +451,13 @@ T('Sản xuất: bản vẽ SX tiếng Việt, file cắt Excel, gửi máy cắ
   ok(/BẢN VẼ SẢN XUẤT/.test(html) && (html.match(/class="trang"/g) || []).length === 2 && (html.match(/<img src="data:image\/png/g) || []).length === 2 && /Khung bao/.test(html), 'bản vẽ 2 trang có hình + thanh nhôm');
   // gửi máy cắt
   let nhan = null;
-  await pg.route('https://sxnhom.motnha.vn/api/don', async (rt) => { nhan = { h: rt.request().headers(), b: JSON.parse(rt.request().postData()) }; await rt.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ ok: true, ma: 'C0001', so_dong: 6 }) }); });
-  await pg.bam('Gửi máy cắt');
+  await pg.route('https://sxnhom.motnha.vn/api/don', async (rt) => { nhan = { h: rt.request().headers(), b: JSON.parse(rt.request().postData()) }; await rt.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ ok: true, ma: 'C0001', moi: true, so_dong: 6, trang_thai: 'san_xuat', canh_bao: [] }) }); });
+  await pg.bam('Gửi xưởng');
   await pg.h.locator('section[data-s="ds"] .tb.tot:has-text("Đã gửi")').waitFor({ timeout: 5000 });
-  ok(nhan && nhan.b.bo.length === 2 && nhan.b.bo[0].boc_tach.nhom.length === 3 && !('anh' in nhan.b.bo[0]), 'gửi số bóc tách, không gửi ảnh');
+  ok(nhan && nhan.b.bo.length === 2 && nhan.b.bo[0].boc_tach.nhom.length === 3 && !('anh' in nhan.b.bo[0]) && nhan.b.bo[0].gia && nhan.b.bo[0].gia.tong > 0, 'gửi số bóc tách + giá, không gửi ảnh');
   await pg.unroute('https://sxnhom.motnha.vn/api/don');
   await pg.route('https://sxnhom.motnha.vn/api/don', (rt) => rt.fulfill({ status: 401, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: '{"ok":false,"loi":"Sai khoá"}' }));
-  await pg.bam('Gửi máy cắt');
+  await pg.bam('Gửi xưởng');
   await pg.h.locator('section[data-s="ds"] .tb.loi').waitFor({ timeout: 5000 });
   ok(/Sai khoá/.test(await pg.h.locator('section[data-s="ds"] .tb.loi').innerText()), 'báo lỗi máy chủ');
   eq(pg.loi, [], 'không lỗi script');

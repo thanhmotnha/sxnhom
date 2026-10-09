@@ -1,5 +1,7 @@
-MỘT NHÀ · MÁY CHỦ XƯỞNG NHÔM (sxnhom.motnha.vn) — v0.3.0
-Nhận đơn cắt từ tiện ích "Một Nhà · Vẽ cửa" → máy cắt nhôm lấy file Excel/CSV về nhập là cắt.
+MỘT NHÀ · PHẦN MỀM XƯỞNG NHÔM (sxnhom.motnha.vn) — v0.4.0
+Nhận đơn từ tiện ích "Một Nhà · Vẽ cửa" (WindoorCraft) → xưởng chạy sản xuất trên web: duyệt đơn, tiến độ từng bộ
+(Chờ cắt → Đã cắt → Lắp ráp → KCS → Chờ giao → Đã lắp), cắt nhôm, kính, phụ kiện, cảnh báo đổi thiết kế, báo cáo lãi + hao hụt.
+Máy cắt nhôm lấy file Excel/CSV về nhập là cắt.
 
 1. CÀI LÊN MÁY CHỦ (người quản trị web làm một lần)
    Cần: Node.js 18 trở lên. Không cần cơ sở dữ liệu, không cần cài thư viện.
@@ -11,13 +13,26 @@ Nhận đơn cắt từ tiện ích "Một Nhà · Vẽ cửa" → máy cắt nh
    e) Trỏ tên miền sxnhom.motnha.vn về máy chủ, nginx chuyển tiếp sang cổng 8080 (mẫu: nginx-sxnhom.conf),
       cấp HTTPS (certbot --nginx -d sxnhom.motnha.vn).
    f) Kiểm tra: mở https://sxnhom.motnha.vn/suc-khoe → {"ok":true,...}
+   g) Đã có HTTPS thì thêm Environment=BAO_MAT=1 vào sxnhom.service (cookie đăng nhập chỉ đi qua HTTPS).
+   h) Mở https://sxnhom.motnha.vn → lần đầu nhập KHOA + tên + SĐT + PIN → thành tài khoản Chủ.
+      Vào "Người dùng" thêm từng người: SĐT + PIN + vai trò (Kinh doanh, Điều phối, Tổ cắt, Tổ lắp ráp, KCS, Kho, Lắp đặt).
+      Trên điện thoại: mở trang rồi "Thêm vào màn hình chính" để dùng như ứng dụng.
    Dữ liệu nằm ở thư mục du-lieu/don/*.json — sao lưu thư mục này là đủ.
 
 2. TIỆN ÍCH (máy báo giá / kỹ thuật)
    Cài đặt → Sản xuất · máy cắt: Máy chủ = https://sxnhom.motnha.vn, Khoá gửi = KHOA ở trên.
-   Danh sách → "Gửi máy cắt": đơn lên máy chủ, có mã dạng C251009-001.
+   Danh sách → "Gửi xưởng": đơn lên phần mềm xưởng, mã dạng C251009-001. Gửi lại cùng hợp đồng WindoorCraft = phiên bản mới
+   của cùng đơn: bộ không đổi giữ tiến độ, bộ đổi quay về Chờ cắt, bộ đã cắt mà đổi thì hiện cảnh báo cho điều phối.
+   Giá bán + giá vốn chỉ gửi kèm khi máy không ở chế độ nhân viên; trên web chỉ tài khoản Chủ thấy giá.
 
-3. MÁY CẮT HAFFNER (Windows 7)
+3. AI LÀM GÌ TRÊN WEB
+   Chủ: duyệt đơn (nếu bật "Đơn mới phải chờ Chủ duyệt"), huỷ / mở lại, xem doanh thu–giá vốn–lãi, báo cáo, người dùng, cài đặt.
+   Điều phối: sửa ngày hẹn, chuyển bộ hàng loạt, xử lý cảnh báo, kính, báo cáo (không thấy giá).
+   Kinh doanh: theo dõi đơn, sửa ngày hẹn / khách / công trình.
+   Tổ cắt / Tổ lắp ráp / KCS / Lắp đặt: trang "Việc" chỉ hiện bộ đang chờ đúng tổ mình, bấm một nút là xong bước.
+   KCS không đạt phải ghi lỗi → bộ quay về tổ lắp ráp kèm lỗi. Kho: cập nhật kính đã đặt / đã về.
+
+4. MÁY CẮT HAFFNER (Windows 7)
    Cách 1 — bằng tay: mở trình duyệt, vào https://sxnhom.motnha.vn/may, nhập khoá, bấm Excel (hoặc CSV),
             rồi trong phần mềm máy cắt chọn chế độ nhập dữ liệu (数据导入) → chọn file vừa tải.
    Cách 2 — tự động: chép thư mục may-cat vào máy cắt, sửa 3 dòng đầu file lay-file-cat.ps1
@@ -25,17 +40,21 @@ Nhận đơn cắt từ tiện ích "Một Nhà · Vẽ cửa" → máy cắt nh
             Cứ 30 giây có đơn mới là file nằm sẵn trong thư mục, đơn chuyển "Máy đã lấy".
             Muốn tự chạy khi bật máy: đặt lối tắt chay-lay-file.bat vào shell:startup.
    Windows 7 cần .NET Framework 4.5+ để dùng HTTPS (TLS 1.2). Không cài được thì cho máy chủ mở thêm http trong mạng nội bộ.
-   Bấm "Cắt xong" trên trang /may khi cắt xong đơn.
+   Bấm "Cắt xong" trên trang /may khi cắt xong đơn → mọi bộ "Chờ cắt" của đơn sang "Đã cắt" (hoặc tổ cắt bấm từng bộ trên điện thoại).
+   Đơn chờ duyệt / đã huỷ không hiện ở máy cắt.
 
-4. FILE CẮT
+5. FILE CẮT
    Trang "Cat nhom": STT · Mã thanh · Tên thanh · Màu · Chiều dài cắt (mm) · Số lượng · Góc trái · Góc phải · Ký hiệu cửa · Vị trí · Loại thanh · Đơn hàng
    Trang "Toi uu cay": xếp đoạn vào cây (mặc định cây 5800, hao đầu 10, mạch cưa 12 — đổi ở Cài đặt tiện ích).
    Trang "Kinh", "Phu kien": để tổ kính / tổ lắp.
    ⚠ Mẫu nhập của phần mềm Haffner chưa có — khi có file mẫu xuất từ máy cắt, chỉnh cột trang "Cat nhom" cho khớp.
 
-5. API (cho lập trình viên)
-   POST /api/don              (X-Khoa) nhận đơn JSON {don, cong_trinh, khach, may:{cay,hao_dau,mach}, bo:[{ky_hieu, so_luong, …, boc_tach:{nhom,kinh,pk}}]} → {ok, ma, so_dong, so_cay}
-   GET  /api/don[?moi=1]      (X-Khoa) danh sách đơn
-   POST /api/don/<ma>/(da-lay|dang-cat|xong|huy)  đổi trạng thái
+6. API (cho lập trình viên)
+   POST /api/don              (X-Khoa) nhận đơn JSON {ma_hd, don, cong_trinh, khach, may:{cay,hao_dau,mach}, bo:[{ky_hieu, so_luong, …, gia:{tong,von}, boc_tach:{nhom,kinh,pk}}]}
+                              → {ok, ma, moi, phien_ban, trang_thai, so_dong, so_cay, canh_bao[]}
+   GET  /api/don[?moi=1]      (X-Khoa) đơn đang sản xuất (moi=1: chưa được máy lấy)
+   POST /api/don/<ma>/(da-lay|xong)  máy cắt báo đã lấy / cắt xong
+   /api/w/…                   API của phần mềm web (cookie đăng nhập + tiêu đề X-MN: 1 khi ghi)
+   Dữ liệu: du-lieu/don/*.json, nguoi-dung.json (PIN băm scrypt), phien.json, cai-dat.json
    GET  /tai/<ma>.xlsx|.csv?k=…   tải file cắt;   GET /ban-ve/<ma>?k=…  bản vẽ sản xuất;   GET /may?k=…  trang máy cắt
    CORS chỉ mở cho https://ln.windoorcraft.com (đổi bằng biến NGUON). KHOA_XEM = khoá chỉ xem/tải (cho máy cắt), không gửi đơn được.

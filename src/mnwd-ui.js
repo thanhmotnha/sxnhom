@@ -910,7 +910,7 @@ tr.dang td{background:#eef3f9}
       h('span', { style: 'flex:1' }),
       h('button', { class: 'nut nho', disabled: ban || !co_sx, title: 'Bản vẽ sản xuất tiếng Việt: mỗi bộ một trang A4 — hình, thanh nhôm (dài cắt, góc, vị trí), kính, phụ kiện', text: 'Bản vẽ SX', onclick: () => self.sanXuat('ban_ve') }),
       h('button', { class: 'nut nho', disabled: ban || !co_sx, title: 'File Excel cắt nhôm: danh sách cắt (nhập máy cắt), tối ưu cây, kính, phụ kiện', text: 'File cắt Excel', onclick: () => self.sanXuat('excel') }),
-      h('button', { class: 'nut nho chinh', disabled: ban || !co_sx || !sx.may_chu, title: sx.may_chu ? 'Gửi danh sách cắt lên ' + sx.may_chu + ' — máy cắt vào đó lấy file về là cắt' : 'Chưa đặt máy chủ (Cài đặt → Sản xuất)', text: 'Gửi máy cắt', onclick: () => self.sanXuat('gui') }),
+      h('button', { class: 'nut nho chinh', disabled: ban || !co_sx || !sx.may_chu, title: sx.may_chu ? 'Gửi đơn lên phần mềm xưởng ' + sx.may_chu + ' — xưởng theo dõi tiến độ, máy cắt lấy file về là cắt. Gửi lại cùng hợp đồng = cập nhật phiên bản mới.' : 'Chưa đặt máy chủ (Cài đặt → Sản xuất)', text: 'Gửi xưởng', onclick: () => self.sanXuat('gui') }),
     ]));
     if (this.lo) {
       s.appendChild(h('div', { class: 'tb hoi' }, [
@@ -1156,7 +1156,7 @@ tr.dang td{background:#eef3f9}
       const c = d.cau_hinh, f = self.cauHinhDong(d);
       let kh = null; try { kh = self.keHoach(f); } catch (e) { kh = null; }
       let svg = ''; try { svg = kh && M.veSvg ? M.veSvg(kh, { rong: 420, cao_max: 380, co_kt: true }) : ''; } catch (e) { svg = ''; }
-      return { id: d.id, ky_hieu: c.ky_hieu || '', so_luong: c.so_luong || 1, vi_tri: c.vi_tri || '', ghi_chu: c.ghi_chu || '', mo_ta: M.moTa(c), he_nhom: (d.gia && d.gia.he_nhom) || self.tenHe(self.heCuaDong(d)), kinh: c.kinh || (d.gia && d.gia.kinh) || '', rong: kh ? kh.rong : c.rong, cao: kh ? kh.cao : c.cao, anh: self.anh[d.id] || '', svg: svg, ma_don: d.ma_don || '', boc_tach: (d.gia && d.gia.boc_tach) || null };
+      return { id: d.id, ky_hieu: c.ky_hieu || '', so_luong: c.so_luong || 1, vi_tri: c.vi_tri || '', ghi_chu: c.ghi_chu || '', mo_ta: M.moTa(c), he_nhom: (d.gia && d.gia.he_nhom) || self.tenHe(self.heCuaDong(d)), kinh: c.kinh || (d.gia && d.gia.kinh) || '', rong: kh ? kh.rong : c.rong, cao: kh ? kh.cao : c.cao, anh: self.anh[d.id] || '', svg: svg, ma_don: d.ma_don || '', boc_tach: (d.gia && d.gia.boc_tach) || null, gia: d.gia ? { tong: d.gia.tong, von: (() => { const l = M.laiBo(d.gia, self.cd.gia_von); return l ? l.von : null; })() } : null };
     });
   };
   U.tenDonSx = function (bo) {
@@ -1171,7 +1171,7 @@ tr.dang td{background:#eef3f9}
     if (thieu.length) {
       if (!ss.ok) { this.kq_lo = { loai: 'loi', html: esc(ss.ly_do) }; return this.veDs(); }
       const tt = this.dr.trangThai();
-      let html = '<b>' + thieu.length + ' dòng</b> chưa có số bóc tách. Tiện ích sẽ vẽ lần lượt từng dòng để WindoorCraft bóc tách (như Tính giá), <b>không lưu</b> gì, rồi ' + ({ ban_ve: 'mở bản vẽ sản xuất', excel: 'tải file cắt Excel', gui: 'gửi lên máy cắt' }[viec]) + '.';
+      let html = '<b>' + thieu.length + ' dòng</b> chưa có số bóc tách. Tiện ích sẽ vẽ lần lượt từng dòng để WindoorCraft bóc tách (như Tính giá), <b>không lưu</b> gì, rồi ' + ({ ban_ve: 'mở bản vẽ sản xuất', excel: 'tải file cắt Excel', gui: 'gửi lên xưởng' }[viec]) + '.';
       if (tt && !tt.trong && !tt.ma_bo) html += '<br><b>Bản vẽ đang mở chưa lưu sẽ bị xoá.</b>';
       this.hoi = { html: html, nut: [{ ten: 'Làm', chinh: true, lam: () => self.chayTinhGia(thieu, () => self.sanXuat(viec)) }, { ten: 'Thôi', lam: () => {} }] };
       return this.veDs();
@@ -1191,11 +1191,15 @@ tr.dang td{background:#eef3f9}
     const url = String(sx.may_chu || '').replace(/\/+$/, '') + '/api/don';
     this.kq_lo = { loai: 'hoi', html: 'Đang gửi lên ' + esc(sx.may_chu) + '…' }; this.veDs();
     try {
-      const than = { nguon: 'mn-windoor ' + M.PHIEN_BAN, don: tt.don, cong_trinh: tt.cong_trinh, khach: this.cd.bao_gia_khach || '', may: { cay: tt.cay, hao_dau: tt.hao_dau, mach: tt.mach }, bo: bo.map((b) => ({ ky_hieu: b.ky_hieu, so_luong: b.so_luong, vi_tri: b.vi_tri, ghi_chu: b.ghi_chu, mo_ta: b.mo_ta, he_nhom: b.he_nhom, kinh: b.kinh, rong: b.rong, cao: b.cao, ma_don: b.ma_don, svg: b.svg, boc_tach: b.boc_tach })) };
+      const an = this.anVon();
+      let ma_hd = Array.from(new Set(bo.map((b) => b.ma_don).filter(Boolean)));
+      if (ma_hd.length !== 1) { let t = null; try { t = this.dr.trangThai(); } catch (e) { t = null; } ma_hd = t && t.ma_don ? [t.ma_don] : []; }
+      const than = { nguon: 'mn-windoor ' + M.PHIEN_BAN, ma_hd: ma_hd.length === 1 ? ma_hd[0] : '', don: tt.don, cong_trinh: tt.cong_trinh, khach: this.cd.bao_gia_khach || '', may: { cay: tt.cay, hao_dau: tt.hao_dau, mach: tt.mach }, bo: bo.map((b) => ({ ky_hieu: b.ky_hieu, so_luong: b.so_luong, vi_tri: b.vi_tri, ghi_chu: b.ghi_chu, mo_ta: b.mo_ta, he_nhom: b.he_nhom, kinh: b.kinh, rong: b.rong, cao: b.cao, ma_don: b.ma_don, svg: b.svg, boc_tach: b.boc_tach, gia: an ? null : b.gia })) };
       const r = await G.fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Khoa': sx.khoa_may || '' }, body: JSON.stringify(than) });
       let j = null; try { j = await r.json(); } catch (e) { j = null; }
       if (!r.ok || !j || !j.ok) throw new Error((j && j.loi) || ('máy chủ trả mã ' + r.status));
-      this.kq_lo = { loai: 'tot', html: 'Đã gửi <b>' + esc(tt.don) + '</b> lên máy cắt (mã <b>' + esc(j.ma) + '</b>, ' + j.so_dong + ' dòng cắt). Trên máy cắt: mở ' + esc(sx.may_chu) + '/may hoặc để chương trình tự lấy về thư mục nhập.' };
+      const cb = (j.canh_bao || []).map((c) => '<br>⚠ ' + esc(c)).join('');
+      this.kq_lo = { loai: cb ? 'cb' : 'tot', html: (j.moi === false ? 'Đã cập nhật đơn xưởng <b>' + esc(j.ma) + '</b> — phiên bản ' + j.phien_ban : 'Đã gửi <b>' + esc(tt.don) + '</b> lên xưởng (mã <b>' + esc(j.ma) + '</b>') + ', ' + j.so_dong + ' dòng cắt). ' + (j.trang_thai === 'cho_duyet' ? 'Đơn đang <b>chờ Chủ duyệt</b> trên ' + esc(sx.may_chu) + ' rồi máy cắt mới nhận.' : 'Máy cắt nhận được ngay.') + cb };
     } catch (e) {
       this.kq_lo = { loai: 'loi', html: 'Chưa gửi được: ' + esc(e && e.message ? e.message : e) + '. Kiểm tra mạng, địa chỉ máy chủ và khoá ở Cài đặt → Sản xuất; vẫn tải được File cắt Excel để chép USB.' };
     }
@@ -1370,7 +1374,7 @@ tr.dang td{background:#eef3f9}
     oK.addEventListener('change', () => { sx.khoa_may = oK.value.trim(); luu(); });
     s.appendChild(h('div', { class: 'hang' }, [h('label', { text: 'Máy chủ' }), h('span', { class: 'o' }, [oMc])]));
     s.appendChild(h('div', { class: 'hang' }, [h('label', { text: 'Khoá gửi' }), h('span', { class: 'o' }, [oK])]));
-    s.appendChild(h('div', { class: 'nho2', text: 'Đơn vị mm. Cây, hao đầu, mạch cưa dùng cho bảng tối ưu cây trong file Excel. "Gửi máy cắt" đẩy danh sách cắt lên máy chủ; máy cắt mở trang /may của máy chủ (hoặc chạy chương trình tự lấy) để nhận file.' }));
+    s.appendChild(h('div', { class: 'nho2', text: 'Đơn vị mm. Cây, hao đầu, mạch cưa dùng cho bảng tối ưu cây trong file Excel. "Gửi xưởng" đẩy đơn lên phần mềm xưởng; máy cắt mở trang /may của máy chủ (hoặc chạy chương trình tự lấy) để nhận file.' }));
 
     // 5b. thông tin trên báo giá
     s.appendChild(h('h4', { text: 'Báo giá' }));

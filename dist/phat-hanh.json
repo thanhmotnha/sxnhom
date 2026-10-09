@@ -1,8 +1,8 @@
 {
-  "ban": "0.3.0",
+  "ban": "0.3.1",
   "tep": "https://raw.githubusercontent.com/thanhmotnha/sxnhom/main/dist/mn-windoor.js",
-  "sha256": "03007c2644f850e0fd7192016c2e73118dc6de3ce2e532fd001d4d59a43bae4a",
-  "chu_ky": "wv9AlHAPEhXOVfFvuVI4jWnTNXyAIzeKM39nOE62NaVDCkyIyLXr2uYkT2FHGBUZ6FqIvX46GFUeKDxfX4CBOA==",
-  "luc": "2026-10-09T04:21:36.272Z",
-  "ghi_chu": "Ẩn giá vốn cho nhân viên (PIN), bản vẽ sản xuất tiếng Việt, file cắt Excel, gửi máy cắt, tự cập nhật"
+  "sha256": "536746e3c22acb65756d06da39c7440299d795f60883cfd0e9d1105dacc7e5c1",
+  "chu_ky": "XAUYFgzIWNG4L+VburPK9pM9rbY2U0ycL9JeLOy1fJ8JT/TceKYrXiKb90i4kBcTy93m+u9YwyMoy5+02xWZNA==",
+  "luc": "2026-10-09T05:35:34.488Z",
+  "ghi_chu": "Gửi xưởng: kèm giá bán/giá vốn, mã hợp đồng, phiên bản đơn"
 }

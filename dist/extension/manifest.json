@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Một Nhà · Vẽ cửa",
   "short_name": "MN Vẽ cửa",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Vẽ cửa nhôm vào WindoorCraft, báo giá, bản vẽ sản xuất, file cắt nhôm. Tự cập nhật (có kiểm chữ ký).",
   "icons": {
     "16": "icon16.png",

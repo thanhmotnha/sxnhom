@@ -5,7 +5,7 @@ Hai phần dùng chung một bộ logic sản xuất (`src/mnwd-sanxuat.js`):
 | Thư mục | Là gì |
 | --- | --- |
 | `dist/extension/` | Tiện ích Chrome **Một Nhà · Vẽ cửa** cho WindoorCraft (ln.windoorcraft.com): vẽ cửa theo mẫu, báo giá, giá vốn/lãi (ẩn bằng PIN cho nhân viên), bản vẽ sản xuất tiếng Việt, file cắt nhôm Excel, gửi máy cắt. |
-| `server/` | Máy chủ xưởng **sxnhom.motnha.vn**: nhận đơn cắt từ tiện ích, trang `/may` cho máy cắt Haffner, chương trình tự lấy file trên Windows 7. Hướng dẫn: `server/HUONG_DAN_MAY_CHU.txt`. |
+| `server/` | **Phần mềm xưởng sxnhom.motnha.vn**: nhận đơn từ tiện ích (có phiên bản), đăng nhập SĐT + PIN theo vai trò, duyệt đơn, tiến độ từng bộ (cắt → lắp ráp → KCS → giao → lắp đặt), kính, phụ kiện, báo cáo doanh thu / lãi / hao hụt nhôm, trang `/may` + chương trình tự lấy file cho máy cắt Haffner. Hướng dẫn cài: `server/HUONG_DAN_MAY_CHU.txt`. |
 
 ## Cài tiện ích (một lần mỗi máy)
 1. Tải kho này (Code → Download ZIP) hoặc chép thư mục `dist/extension`.

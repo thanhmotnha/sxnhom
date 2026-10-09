@@ -5,8 +5,10 @@ After=network.target
 [Service]
 WorkingDirectory=/opt/sxnhom
 Environment=CONG=8080
+Environment=SAU_PROXY=1
 Environment=DU_LIEU=/opt/sxnhom/du-lieu
 Environment=KHOA=DOI-THANH-KHOA-DAI-KHO-DOAN
+# Environment=BAO_MAT=1   (bỏ dấu # sau khi đã có HTTPS)
 ExecStart=/usr/bin/node /opt/sxnhom/may-chu.js
 Restart=always
 User=www-data

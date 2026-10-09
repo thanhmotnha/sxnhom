@@ -1,5 +1,5 @@
 MỘT NHÀ · VẼ CỬA — tiện ích Chrome cho WindoorCraft (ln.windoorcraft.com)
-Phiên bản 0.3.0 — 09/10/2026
+Phiên bản 0.3.1 — 09/10/2026
 
 CÀI ĐẶT (làm một lần trên mỗi máy)
 1. Mở Chrome, gõ vào thanh địa chỉ:  chrome://extensions
@@ -34,7 +34,8 @@ DÙNG
   - Bản vẽ SX: mỗi bộ một trang A4 tiếng Việt — hình WindoorCraft, bảng thanh nhôm (mã, tên, dài cắt, SL, góc cắt, vị trí),
     kính (rộng × cao), phụ kiện, ô ký Người lập / Tổ cắt / Tổ lắp / KCS. Bấm "In / lưu PDF".
   - File cắt Excel: trang Cat nhom (để nhập máy cắt), Toi uu cay (xếp đoạn vào cây 5800), Kinh, Phu kien.
-  - Gửi máy cắt: đẩy đơn lên máy chủ xưởng (mặc định https://sxnhom.motnha.vn) — máy cắt lấy file về.
+  - Gửi xưởng: đẩy đơn lên phần mềm xưởng https://sxnhom.motnha.vn (kèm giá bán, giá vốn khi máy không khoá nhân viên).
+    Gửi lại cùng hợp đồng = phiên bản mới; bộ đã sản xuất mà đổi thiết kế thì xưởng nhận cảnh báo.
   Dòng nào chưa có số bóc tách thì tiện ích vẽ lần lượt để WindoorCraft bóc tách (KHÔNG lưu đơn) rồi mới xuất.
   Cây nhôm / hao đầu / mạch cưa / máy chủ / khoá gửi: Cài đặt → Sản xuất · máy cắt.
 • Danh sách: "Dán từ Excel" — cột: Ký hiệu · Mẫu · Rộng · Cao · SL · Ô thoáng · Vị trí · Ghi chú · Kính
@@ -46,7 +47,7 @@ DÙNG
 
 TIỆN ÍCH KHÔNG LÀM
 • Không xoá, không sửa đơn hàng cũ; chỉ vẽ và bấm "Lưu lại" như người dùng.
-• Không đọc/gửi mật khẩu; chỉ gửi danh sách cắt lên máy chủ xưởng khi anh bấm "Gửi máy cắt". Cài đặt lưu trong trình duyệt máy này.
+• Không đọc/gửi mật khẩu; chỉ gửi đơn lên phần mềm xưởng khi anh bấm "Gửi xưởng". Cài đặt lưu trong trình duyệt máy này.
 
 CẦN XƯỞNG XÁC NHẬN (số đang để mặc định)
 • Khe hở ô chờ → phủ bì: cửa đi 10/5, cửa sổ 10/10, vách 10/10 mm.
