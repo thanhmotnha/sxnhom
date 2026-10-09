@@ -1,0 +1,15 @@
+[Unit]
+Description=Mot Nha - may chu xuong nhom (sxnhom.motnha.vn)
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/sxnhom
+Environment=CONG=8080
+Environment=DU_LIEU=/opt/sxnhom/du-lieu
+Environment=KHOA=DOI-THANH-KHOA-DAI-KHO-DOAN
+ExecStart=/usr/bin/node /opt/sxnhom/may-chu.js
+Restart=always
+User=www-data
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,1 @@
+{ "name": "sxnhom-motnha", "version": "0.3.0", "private": true, "description": "Máy chủ xưởng nhôm Một Nhà — nhận đơn cắt, máy cắt lấy file", "main": "may-chu.js", "scripts": { "start": "node may-chu.js" }, "engines": { "node": ">=18" } }

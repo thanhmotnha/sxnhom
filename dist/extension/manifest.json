@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Một Nhà · Vẽ cửa",
+  "short_name": "MN Vẽ cửa",
+  "version": "0.3.0",
+  "description": "Vẽ cửa nhôm vào WindoorCraft, báo giá, bản vẽ sản xuất, file cắt nhôm. Tự cập nhật (có kiểm chữ ký).",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ln.windoorcraft.com/*"
+      ],
+      "js": [
+        "goc.js",
+        "nap.js"
+      ],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    }
+  ]
+}

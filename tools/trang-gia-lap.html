@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><title>WindoorCraft (giả lập)</title>
+<style>body{margin:0;font:13px "Segoe UI",system-ui,sans-serif;background:#f4f6f9}#bar{height:42px;background:#fff;border-bottom:1px solid #ddd;display:flex;align-items:center;padding:0 12px;gap:18px}#trai{position:fixed;left:0;top:42px;width:200px;height:378px;background:#fff;border:1px solid #ddd}#webcc{position:fixed;left:0;top:42px;right:0;bottom:0}#ve{position:absolute;left:660px;top:30px;right:20px;bottom:20px;border:1px dashed #b8c2cf;padding:10px;white-space:pre-wrap;font:12px Consolas,monospace;color:#33435a;overflow:auto}</style></head>
+<body><div id="app"><div id="bar"><b>WINDOOR CRAFT (giả lập)</b><span>Hủy bỏ</span><span>Khôi phục</span><span>Xóa Và Thêm Mới</span><span id="nut-luu" style="cursor:pointer;color:#17365d">Lưu lại</span></div><div id="webcc"><div id="ve"></div></div><div id="trai"></div></div>
+<script src="../test/mock-windoor.js"></script>
+<script>
+  const p = new URLSearchParams(location.search);
+  window.K = MNWD_MOCK.tao({ win: window, loi_luu: p.get('loi_luu') === '1', tre_luu: 60, tre_he_nhom: 80 });
+  document.getElementById('nut-luu').onclick = () => K.draw.saveOrder();
+  setInterval(() => { // "bản vẽ" của trang giả lập: in trạng thái ra chữ để nhìn khi thử
+    const sm = window.webcc.shapeManager, q = K.draw.$route.query;
+    document.getElementById('ve').textContent = 'Đường dẫn: ' + K.draw.$route.name + ' ' + JSON.stringify(q) + '\nHệ nhôm: ' + K.oi.order_info.product_name + '\nKý hiệu: ' + K.oi.order_info.window_no + '  SL: ' + K.oi.order_info.count + '\n\n' + (sm.isEmpty ? '(bản vẽ trống)' : sm.shapem.map((f) => JSON.stringify(f.xuat(), null, 1)).join('\n')) + '\n\nĐÃ LƯU: ' + JSON.stringify(K.da_luu.map((x) => [x.ma_don, x.ma_bo, x.ky_hieu, x.so_luong, x.he_nhom]));
+  }, 300);
+</script>
+<script src="../dist/mn-windoor.js"></script>
+</body></html>

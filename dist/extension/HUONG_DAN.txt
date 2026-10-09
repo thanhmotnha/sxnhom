@@ -1,0 +1,60 @@
+MỘT NHÀ · VẼ CỬA — tiện ích Chrome cho WindoorCraft (ln.windoorcraft.com)
+Phiên bản 0.3.0 — 09/10/2026
+
+CÀI ĐẶT (làm một lần trên mỗi máy)
+1. Mở Chrome, gõ vào thanh địa chỉ:  chrome://extensions
+2. Bật "Chế độ dành cho nhà phát triển" (Developer mode) ở góc trên bên phải.
+3. Bấm "Tải tiện ích đã giải nén" (Load unpacked) → chọn thư mục chứa file này
+   (thư mục có manifest.json, mn-windoor.js, icon*.png).
+4. Vào https://ln.windoorcraft.com, đăng nhập, mở Thiết kế.
+   Nút "Một Nhà · Vẽ cửa" hiện trên thanh trên cùng, cạnh logo.
+TỰ CẬP NHẬT (từ 0.3.0): mỗi lần mở WindoorCraft, tiện ích tự hỏi bản mới trên GitHub (thanhmotnha/sxnhom),
+   kiểm chữ ký của Một Nhà rồi mới chạy — không cần chép đè thư mục nữa. Bản mới lên thì F5 là có (chậm nhất ~5 phút).
+   Mất mạng: dùng bản đã tải lần trước. Cài đặt → dòng cuối ghi phiên bản đang chạy.
+   Chỉ khi đổi khoá ký mới phải cài lại thư mục này.
+
+DÙNG
+• Vẽ nhanh: chọn mẫu (D2QT, S2L…), gõ Rộng × Cao, chọn hệ nhôm, kính (để trống = loại mặc định) → "Vẽ vào WindoorCraft".
+  Cửa vẽ ra là đối tượng gốc của WindoorCraft, sửa tay được như thường. "Hoàn tác lần vẽ này" để bỏ.
+• Tự chia ô (mới ở 0.1.1): Cấu tạo → Hình thái = "Tự chia ô". Bấm vào một ô trên hình xem trước để chọn,
+  rồi Chia đứng / Chia ngang / Gộp ô, chọn Kiểu ô (fix, mở quay lề trái/phải, 2 cánh, 4 cánh, hất, lùa, xếp trượt),
+  nhập Rộng/Cao phần (để trống = chia đều). Bấm "Lưu mẫu" để giữ hình thái đó thành mẫu riêng của xưởng.
+• Giá (mới ở 0.2.0): vẽ xong một bộ là hiện giá theo bảng giá WindoorCraft (chưa cần lưu), có "Chi tiết" từng dòng.
+  Danh sách có cột Thành tiền và tổng. "Tính giá N dòng" = vẽ lần lượt từng dòng và hỏi giá, KHÔNG lưu đơn.
+  "Báo giá" = trang báo giá có hình từng bộ, bấm "In / lưu PDF". Tên công ty, địa chỉ, SĐT, khách hàng, VAT, ghi chú: thẻ Cài đặt → Báo giá.
+  Giá do chính hàm tính của WindoorCraft (cùng hàm khi bấm Lưu lại) — đã đối chiếu khớp từng đồng với đơn thử.
+• Giá vốn & lãi: thẻ Cài đặt → Giá vốn. Đặt giá nhôm chung đ/kg, hoặc giá riêng từng mã nhôm / kính / phụ kiện
+  (ô để trống = dùng giá vốn trong WindoorCraft). Tiện ích lấy số bóc tách của WindoorCraft (kg nhôm, m² kính, phụ kiện)
+  nhân giá của xưởng → giá vốn, lãi, % lãi từng bộ và cả danh sách. Không in lên báo giá khách; có trong file CSV.
+• Nhân viên báo giá (mới ở 0.3.0): Cài đặt → Chế độ nhân viên báo giá → đặt mã PIN 4–8 số → khoá.
+  Khoá rồi: ẩn cột Lãi, dòng giá vốn/lãi, bảng Giá vốn; file CSV và file sao lưu không có giá vốn.
+  Nút 🔓/🔒 trên đầu bảng: bấm để khoá nhanh; đang khoá thì bấm → nhập PIN để mở.
+  Lưu ý: đây là khoá giao diện. Muốn chặn hẳn, tài khoản chính WindoorCraft tắt quyền "xem giá vốn" của tài khoản nhân viên.
+• Sản xuất (mới ở 0.3.0) — thẻ Danh sách, hàng "Sản xuất":
+  - Bản vẽ SX: mỗi bộ một trang A4 tiếng Việt — hình WindoorCraft, bảng thanh nhôm (mã, tên, dài cắt, SL, góc cắt, vị trí),
+    kính (rộng × cao), phụ kiện, ô ký Người lập / Tổ cắt / Tổ lắp / KCS. Bấm "In / lưu PDF".
+  - File cắt Excel: trang Cat nhom (để nhập máy cắt), Toi uu cay (xếp đoạn vào cây 5800), Kinh, Phu kien.
+  - Gửi máy cắt: đẩy đơn lên máy chủ xưởng (mặc định https://sxnhom.motnha.vn) — máy cắt lấy file về.
+  Dòng nào chưa có số bóc tách thì tiện ích vẽ lần lượt để WindoorCraft bóc tách (KHÔNG lưu đơn) rồi mới xuất.
+  Cây nhôm / hao đầu / mạch cưa / máy chủ / khoá gửi: Cài đặt → Sản xuất · máy cắt.
+• Danh sách: "Dán từ Excel" — cột: Ký hiệu · Mẫu · Rộng · Cao · SL · Ô thoáng · Vị trí · Ghi chú · Kính
+  (có dòng tiêu đề thì cột xếp thế nào cũng được) → "Vẽ và lưu cả N dòng vào một đơn hàng".
+  Tiện ích vẽ và bấm "Lưu lại" từng bộ; gặp lỗi thì dừng ở dòng đó, dòng đã lưu không bị làm lại.
+  Xong có nút: Mở đơn hàng · In báo giá · bản vẽ · Tối ưu cắt.
+• Cài đặt: gán "Hệ nhôm theo mẫu" một lần (có nút điền gợi ý — phải soát lại), khe hở ô chờ,
+  giới hạn cảnh báo kích thước cánh, mẫu riêng của xưởng, sao lưu sang máy khác.
+
+TIỆN ÍCH KHÔNG LÀM
+• Không xoá, không sửa đơn hàng cũ; chỉ vẽ và bấm "Lưu lại" như người dùng.
+• Không đọc/gửi mật khẩu; chỉ gửi danh sách cắt lên máy chủ xưởng khi anh bấm "Gửi máy cắt". Cài đặt lưu trong trình duyệt máy này.
+
+CẦN XƯỞNG XÁC NHẬN (số đang để mặc định)
+• Khe hở ô chờ → phủ bì: cửa đi 10/5, cửa sổ 10/10, vách 10/10 mm.
+• Giới hạn cánh (cảnh báo, không chặn): quay sổ 350–800 × 400–1600; hất 350–1000 × 350–1200;
+  quay đi 500–1000 × 1800–2600; lùa 450–1500 × 500–2800; xếp 450–900 × 1800–2800; kính fix ≤ 3 m².
+• Cửa đi có vách bên: tiện ích vẽ khung 3 cạnh (không bậu dưới) cho cả bộ.
+• Hệ nhôm gợi ý cho cửa sổ mở quay/hất đang là "XINGFA-55 Vách kính cố định (cánh mở ra ngoài)".
+
+• Cột file cắt đang để dạng chung — khi có file mẫu nhập của phần mềm máy cắt Haffner, chỉnh cho khớp.
+
+Đơn nháp thử: FG2026100811 (#282254, TEST-1..3) — xoá được.
