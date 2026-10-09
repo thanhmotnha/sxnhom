@@ -1,8 +1,8 @@
 {
   "ban": "0.3.0",
-  "tep": "https://raw.githubusercontent.com/thanhmotnha/sxnhom/v0.3.0/dist/mn-windoor.js",
+  "tep": "https://raw.githubusercontent.com/thanhmotnha/sxnhom/main/dist/mn-windoor.js",
   "sha256": "03007c2644f850e0fd7192016c2e73118dc6de3ce2e532fd001d4d59a43bae4a",
-  "chu_ky": "+cZkRlxNN94gmoUz+Gdwa7Nr9LO/A9FJdSeKU6wbUfR6xbppEcC2NX9VU7dGhBYGwjQ3Nb/YC7ssQoDDJnJLZA==",
-  "luc": "2026-10-09T04:18:42.801Z",
+  "chu_ky": "wv9AlHAPEhXOVfFvuVI4jWnTNXyAIzeKM39nOE62NaVDCkyIyLXr2uYkT2FHGBUZ6FqIvX46GFUeKDxfX4CBOA==",
+  "luc": "2026-10-09T04:21:36.272Z",
   "ghi_chu": "Ẩn giá vốn cho nhân viên (PIN), bản vẽ sản xuất tiếng Việt, file cắt Excel, gửi máy cắt, tự cập nhật"
 }

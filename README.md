@@ -16,7 +16,7 @@ Hai phần dùng chung một bộ logic sản xuất (`src/mnwd-sanxuat.js`):
 ```
 npm test                                   # dựng + chạy toàn bộ phép thử
 MNWD_KHOA=/duong/dan/khoa-ky-phat-hanh.pem node phat-hanh.js "ghi chú"
-git add -A && git commit -m "vX.Y.Z" && git tag vX.Y.Z && git push origin main --tags
+git add -A && git commit -m "vX.Y.Z" && git push origin main
 ```
 Khoá riêng `khoa-ky-phat-hanh.pem` **không** nằm trong kho (giữ ở máy của công ty). Bản không có chữ ký đúng sẽ không bao giờ chạy trên máy nào, kể cả khi kho GitHub bị sửa. Đổi khoá thì phải cài lại tiện ích một lần trên mỗi máy.
 
